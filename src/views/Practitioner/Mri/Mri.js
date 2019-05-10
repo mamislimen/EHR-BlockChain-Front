@@ -77,6 +77,10 @@ class Mri extends Component {
     })
   }
   submit = (e) => {
+    if(this.state.mri==="" || this.state.select==="" || this.state.date===""){
+      swal("Error!", "Complete the form", "error");
+    }
+    else{
     swal({
       title: "Are you sure you want to add this MRI result ?",
       icon: "warning",
@@ -117,6 +121,7 @@ class Mri extends Component {
 })
 }
 });
+    }
   }
   render() {
     if (this.state.data === null) {
@@ -139,7 +144,7 @@ class Mri extends Component {
                       <Label>Patient's name</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <p className="form-control-static">Username</p>
+                      <p className="form-control-static">Firas</p>
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -147,7 +152,7 @@ class Mri extends Component {
                       <Label>Practitioner's name</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <p className="form-control-static">Username</p>
+                      <p className="form-control-static">Dr Mohamed Salah</p>
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -177,7 +182,7 @@ class Mri extends Component {
                       {
           data.map((val, idx)=> {
             return (
-                        <option value={val.consultation.consultationId}>{val.timestamp} reason : {val.consultation.reason}</option>
+                        <option value={val.consultation.consultationId}>{val.consultation.consultionDate} reason : {val.consultation.reason}</option>
             )
                       })
                     }

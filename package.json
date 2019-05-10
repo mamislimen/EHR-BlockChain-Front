@@ -37,6 +37,7 @@
     "enzyme-adapter-react-16": "^1.11.2",
     "flag-icon-css": "^3.3.0",
     "flat-icons": "^1.0.0",
+    "react-loading-overlay": "^1.0.1",
     "font-awesome": "^4.7.0",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^2.2.0",
@@ -71,8 +72,8 @@
     "simple-line-icons": "^2.4.1",
     "sweetalert": "^2.1.2",
     "sweetalert-react": "^0.4.11",
-    "webpack": "4.28.3", 
-    "webpack-dev-server": "3.1.14", 
+    "webpack": "4.28.3",
+    "webpack-dev-server": "3.1.14",
     "serve": "^9.4.0",
     "twilio": "^3.30.1"
   },
