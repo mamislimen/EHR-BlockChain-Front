@@ -227,7 +227,8 @@ class Prescription extends Component {
     }
     else{
     let drugsPushed=[];
-    let datepres=this.state.date;
+    //let datepres=this.state.date;
+    let datepres=new Date();
     let _this=this;
     swal({
       title: "Are you sure you want to add this condition ?",
