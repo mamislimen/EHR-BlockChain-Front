@@ -85,7 +85,7 @@
   },
   "scripts": {
     "dev": "react-scripts start",
-    "start": "serve -s build",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:cov": "react-scripts test --coverage",

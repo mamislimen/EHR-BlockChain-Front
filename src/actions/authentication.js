@@ -20,8 +20,6 @@ export const loginUser = (user) => dispatch => {
                 const token  = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjExMjIiLCJpYXQiOjE1NTc0NzY4MDIsImV4cCI6MTU1NzU2MzIwMn0.WKVouobN_D6KPJOHLBu0UrAOoKbKzE2eypS5OCp8M5w";
                 localStorage.setItem('jwtToken', token);
                 localStorage.setItem('user' ,'patient');
-                setAuthToken(token);
-                const decoded = jwt_decode(token);
                 dispatch(setCurrentUser(decoded));
                 console.log(res.data);
             })
