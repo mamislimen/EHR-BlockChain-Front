@@ -51,7 +51,7 @@ getAutoIdCard(){
 
  if(this.state.idc1 ==="" && this.state.idc2 ==="" )
  { 
- axios.get('http://localhost:4000/api/auth/card')
+ axios.get('https://pacific-anchorage-81247.herokuapp.com/api/auth/card')
   .then( (response) =>{
     
     
@@ -72,7 +72,7 @@ getAutoIdCard(){
   });
  }else  if(this.state.idc1 !=="" && this.state.idc2 ==="" )
  { 
- axios.get('http://localhost:4000/api/auth/card')
+ axios.get('https://pacific-anchorage-81247.herokuapp.com/api/auth/card')
   .then( (response)=> {
      if( response.data[0]!==this.state.idc1 )
     {
@@ -99,7 +99,7 @@ getAutoIdCard(){
   clearInterval(this.interval);
   axios({
     method: 'post',
-    url: 'http://localhost:4000/api/auth/logincard',
+    url: 'https://pacific-anchorage-81247.herokuapp.com/api/auth/logincard',
     data: {
       idcard1: this.state.idc1,
       idcard2: this.state.idc2

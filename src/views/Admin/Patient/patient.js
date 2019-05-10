@@ -93,7 +93,7 @@ class AdminPatient extends Component {
 }
 getIdCard()
 {
-   fetch('http://localhost:4000/api/auth/card')
+   fetch('https://pacific-anchorage-81247.herokuapp.com/api/auth/card')
    .then(data => data.json())
    .then((data) => { if(typeof(data[0]) !== 'undefined'){this.setState({ idc: data[0] })} ;
    console.log(data[0]);

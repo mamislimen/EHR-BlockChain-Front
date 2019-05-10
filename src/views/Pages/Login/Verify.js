@@ -15,7 +15,7 @@ class Verify extends Component {
   sendText = _ => {
     const { text } = this.state;
     //pass text message GET variables via query string
-    fetch(`http://localhost:4000/send-text?recipient=23340187&textmessage=${text.textmessage}`)
+    fetch(`https://pacific-anchorage-81247.herokuapp.com/send-text?recipient=23340187&textmessage=${text.textmessage}`)
     .catch(err => console.error(err))
   }
 
