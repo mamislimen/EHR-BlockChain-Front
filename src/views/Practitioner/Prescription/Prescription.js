@@ -216,6 +216,7 @@ class Prescription extends Component {
     console.log(this.state.values)
   }
   submit = (e) => {
+    let _this=this;
     this.setState({
       errorTiming:false,
       errorMeal:false,
@@ -227,9 +228,7 @@ class Prescription extends Component {
     }
     else{
     let drugsPushed=[];
-    //let datepres=this.state.date;
-    let datepres=new Date();
-    let _this=this;
+    let datepres=_this.state.date;
     swal({
       title: "Are you sure you want to add this condition ?",
       icon: "warning",
