@@ -48,7 +48,7 @@ class LabResults extends Component {
 
   }
   componentWillMount() {
-    fetch(`http://localhost:3000/api/model.PractitionerAddConsultation`)
+    fetch(`http://b0e413f5.ngrok.io/api/model.PractitionerAddConsultation`)
     // We get the API response and receive data in JSON format...
     .then(response => response.json())
     // ...then we update the users state
@@ -87,7 +87,7 @@ class LabResults extends Component {
     }).then(willAdd => {
       if (willAdd) {
     let id = Math.floor(1000 + Math.random() * 9000);
-    fetch('http://localhost:3000/api/model.PractitionerAddLabRes', {
+    fetch('http://b0e413f5.ngrok.io/api/model.PractitionerAddLabRes', {
   method: 'POST',
   headers: {
     'Accept': 'application/json',

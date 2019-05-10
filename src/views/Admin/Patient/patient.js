@@ -104,7 +104,7 @@ getFiles(files){
     this.setState({ photo: files.base64 })
   }
   addPatient(){
-    fetch('http://192.168.75.139:3000/api/model.Patient', {
+    fetch('http://b0e413f5.ngrok.io/api/model.Patient', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',

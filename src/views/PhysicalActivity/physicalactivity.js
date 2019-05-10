@@ -74,7 +74,7 @@ export default class physicalactivity extends Component {
     }
     
     if(this.state.newPhysicalData.type != '' && this.state.newPhysicalData.duration != '' ){
-    fetch('http://localhost:3000/api/model.PatientAddPhysicalActivity', {
+    fetch('http://b0e413f5.ngrok.io/api/model.PatientAddPhysicalActivity', {
      method: 'POST',
       headers: {
       'Accept': 'application/json',
@@ -116,7 +116,7 @@ export default class physicalactivity extends Component {
 deletePhysical(physicalId){
  
   
-fetch('http://localhost:3000/api/model.Patient/1').then(res=>res.json()).then(json=>{
+fetch('http://b0e413f5.ngrok.io/api/model.Patient/1').then(res=>res.json()).then(json=>{
   
  json.physicalActivity.forEach((nut)=> {
  
@@ -130,7 +130,7 @@ fetch('http://localhost:3000/api/model.Patient/1').then(res=>res.json()).then(js
     }
     console.log(json.physicalActivity)
 
-    fetch('http://localhost:3000/api/model.Patient/1', {
+    fetch('http://b0e413f5.ngrok.io/api/model.Patient/1', {
       method: 'PUT',
        headers: {
          'Accept': 'application/json',
@@ -164,7 +164,7 @@ fetch('http://localhost:3000/api/model.Patient/1').then(res=>res.json()).then(js
         })
      }
      )
-     fetch('http://localhost:3000/api/model.PhysicalActivity/'+physicalId, {
+     fetch('http://b0e413f5.ngrok.io/api/model.PhysicalActivity/'+physicalId, {
       method: 'DELETE',
       
      })
@@ -210,7 +210,7 @@ this._refreshPhysical();
     }
    
     if(this.state.editPhysicalData.type != '' && this.state.editPhysicalData.duration != ''){
-    fetch('http://localhost:3000/api/model.PhysicalActivity/'+this.state.editPhysicalData.physicalId, {
+    fetch('http://b0e413f5.ngrok.io/api/model.PhysicalActivity/'+this.state.editPhysicalData.physicalId, {
      method: 'PUT',
       headers: {
         'Accept': 'application/json',
@@ -240,7 +240,7 @@ this.setState({
 
   _refreshPhysical() {
     this._isMounted = true;
-    fetch('http://localhost:3000/api/model.Patient/1')
+    fetch('http://b0e413f5.ngrok.io/api/model.Patient/1')
     .then(res => res.json())
     .then(json => {
       this.setState({
@@ -255,7 +255,7 @@ this.setState({
         const num = ph.split('#');
         //console.log(num[1]);
         if(num[1]!='null'){
-        fetch('http://localhost:3000/api/model.PhysicalActivity/'+num[1])
+        fetch('http://b0e413f5.ngrok.io/api/model.PhysicalActivity/'+num[1])
         .then(res2 => res2.json())
         .then(json2 => {
           if(json2.type != '' && json2.duration ){
