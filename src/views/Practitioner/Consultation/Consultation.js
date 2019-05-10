@@ -72,7 +72,7 @@ class Consultation extends Component {
     }).then(willAdd => {
       if (willAdd) {
     let id = Math.floor(1000 + Math.random() * 9000);
-    fetch('http://b0e413f5.ngrok.io/api/PractitionerAddConsultation', {
+    fetch('http://33090049.ngrok.io/api/PractitionerAddConsultation', {
   method: 'POST',
   headers: {
     'Accept': 'application/json',

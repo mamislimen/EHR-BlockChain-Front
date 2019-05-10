@@ -73,7 +73,7 @@ class Allergies extends Component {
     }).then(willAdd => {
       if (willAdd) {
     let id = Math.floor(1000 + Math.random() * 9000);
-    fetch('http://b0e413f5.ngrok.io/api/PractitionerAddAllergie', {
+    fetch('http://33090049.ngrok.io/api/PractitionerAddAllergie', {
   method: 'POST',
   headers: {
     'Accept': 'application/json',

@@ -78,7 +78,7 @@ export default class nutrition extends Component {
       });
     }
     if(this.state.newNutruitionData.name != '' && this.state.newNutruitionData.type != '' && this.state.newNutruitionData.quantity != '' && this.state.newNutruitionData.quantity > 0){
-    fetch('http://b0e413f5.ngrok.io/api/PatientAddNutrition', {
+    fetch('http://33090049.ngrok.io/api/PatientAddNutrition', {
      method: 'POST',
       headers: {
       'Accept': 'application/json',
@@ -120,7 +120,7 @@ export default class nutrition extends Component {
 deleteNutrition(nutritionId){
  
   
-fetch('http://b0e413f5.ngrok.io/api/Patient/1').then(res=>res.json()).then(json=>{
+fetch('http://33090049.ngrok.io/api/Patient/1').then(res=>res.json()).then(json=>{
   
  json.nutrition.forEach((nut)=> {
  
@@ -134,7 +134,7 @@ fetch('http://b0e413f5.ngrok.io/api/Patient/1').then(res=>res.json()).then(json=
     }
     console.log(json.nutrition)
 
-    fetch('http://b0e413f5.ngrok.io/api/Patient/1', {
+    fetch('http://33090049.ngrok.io/api/Patient/1', {
       method: 'PUT',
        headers: {
          'Accept': 'application/json',
@@ -168,7 +168,7 @@ fetch('http://b0e413f5.ngrok.io/api/Patient/1').then(res=>res.json()).then(json=
         })
      }
      )
-     fetch('http://b0e413f5.ngrok.io/api/Nutrition/'+nutritionId, {
+     fetch('http://33090049.ngrok.io/api/Nutrition/'+nutritionId, {
       method: 'DELETE',
       
      })
@@ -218,7 +218,7 @@ this._refreshNutrition();
       });
     }
     if(this.state.editNutritionData.name != '' && this.state.editNutritionData.type != '' && this.state.editNutritionData.quantity != ''){
-    fetch('http://b0e413f5.ngrok.io/api/Nutrition/'+this.state.editNutritionData.nutritionId, {
+    fetch('http://33090049.ngrok.io/api/Nutrition/'+this.state.editNutritionData.nutritionId, {
      method: 'PUT',
       headers: {
         'Accept': 'application/json',
@@ -248,7 +248,7 @@ this.setState({
 
   _refreshNutrition() {
     this._isMounted = true;
-    fetch('http://b0e413f5.ngrok.io/api/Patient/1')
+    fetch('http://33090049.ngrok.io/api/Patient/1')
     .then(res => res.json())
     .then(json => {
       this.setState({
@@ -263,7 +263,7 @@ this.setState({
         const num = nut.split('#');
         //console.log(num[1]);
         if(num[1]!='null'){
-        fetch('http://b0e413f5.ngrok.io/api/Nutrition/'+num[1])
+        fetch('http://33090049.ngrok.io/api/Nutrition/'+num[1])
         .then(res2 => res2.json())
         .then(json2 => {
           if(json2.name != '' && json2.type != '' && json2.quantity != ''){

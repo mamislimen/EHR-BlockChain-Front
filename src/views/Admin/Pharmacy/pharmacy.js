@@ -68,7 +68,7 @@ getIdCard()
 };
 
   addParmacy(){
-    fetch('http://b0e413f5.ngrok.io/api/Pharmacy', {
+    fetch('http://33090049.ngrok.io/api/Pharmacy', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
