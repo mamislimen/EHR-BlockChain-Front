@@ -29,7 +29,6 @@ import swal from 'sweetalert';
 class Consultation extends Component {
   constructor(props) {
     super(props);
-
     this.toggle = this.toggle.bind(this);
     this.toggleFade = this.toggleFade.bind(this);
     this.curr = new Date();
@@ -60,6 +59,10 @@ class Consultation extends Component {
     })
   }
   submit = (e) => {
+    if(this.state.reason==="" || this.state.output==="" || this.state.date===""){
+      swal("Error!", "Complete the form", "error");
+    }
+    else{
     swal({
       title: "Are you sure you want to add this condition ?",
       icon: "warning",
@@ -101,6 +104,7 @@ class Consultation extends Component {
 })
 }
 });
+}
   }
 
   render() {
@@ -119,7 +123,7 @@ class Consultation extends Component {
                       <Label>Patient's name</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <p className="form-control-static">Username</p>
+                      <p className="form-control-static">Firas</p>
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -127,7 +131,7 @@ class Consultation extends Component {
                       <Label>Practitioner's name</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <p className="form-control-static">Username</p>
+                      <p className="form-control-static">Dr Mohamed Salah</p>
                     </Col>
                   </FormGroup>
                   <FormGroup row>

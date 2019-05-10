@@ -27,7 +27,7 @@ import {
 import Autocomplete from 'react-autocomplete';
 import './autocomplete.css';
 import swal from 'sweetalert';
-
+import LoadingOverlay from 'react-loading-overlay';
 
 class Prescription extends Component {
   constructor(props) {
@@ -36,9 +36,14 @@ class Prescription extends Component {
     this.date = this.curr.toISOString().substr(0,10);
     this.state={
       drugs: [{name:""}],
-      values: [{name:"",timing:[],meal:""}],
+      values: [{name:"",timing:[],meal:"",quantity:""}],
       autocompleteData: [],
-      date:this.date
+      date:this.date,
+      errorName:false,
+      errorTiming:false,
+      errorMeal:false,
+      errorQuantity:false,
+      isActive:false,
     }
     this.onChange = this.onChange.bind(this);
     this.onSelect = this.onSelect.bind(this);
@@ -204,9 +209,26 @@ class Prescription extends Component {
     this.setState({ values });
     console.log(this.state.values)
   }
+  quantityChange(i,e){
+    let values = [...this.state.values];
+    values[i].quantity=e.target.value;
+    this.setState({ values });
+    console.log(this.state.values)
+  }
   submit = (e) => {
+    this.setState({
+      errorTiming:false,
+      errorMeal:false,
+      errorName:false,
+      errorQuantity:false
+    });
+    if(this.state.values.length===0){
+      swal("Error!", "Prescription needs at least one drug", "error");
+    }
+    else{
     let drugsPushed=[];
     let datepres=this.state.date;
+    let _this=this;
     swal({
       title: "Are you sure you want to add this condition ?",
       icon: "warning",
@@ -214,8 +236,46 @@ class Prescription extends Component {
       dangerMode: true,
 
     }).then(willAdd => {
+      _this.setState({
+        isActive:true
+      });
       if (willAdd) {
         let values=[...this.state.values];
+        values.forEach(function (v, i) {
+          if(values[i].name===""){
+            _this.setState({
+              errorName:true
+            });
+          }
+          if(values[i].timing.length==0){
+            _this.setState({
+              errorTiming:true
+            });
+          }
+          if(values[i].meal===""){
+            _this.setState({
+              errorMeal:true
+            });
+          }
+          if(values[i].quantity===""){
+            _this.setState({
+              errorQuantity:true
+            });
+          }
+        });
+        if(_this.state.errorName){
+          swal("Error!", "You should type the drug name", "error");
+        }
+        else if(_this.state.errorTiming){
+          swal("Error!", "You should specify timing of consumption", "error");
+        }
+        else if(_this.state.errorMeal){
+          swal("Error!", "You should specify before or after meal", "error");
+        }
+        else if(_this.state.errorQuantity){
+          swal("Error!", "You should specify the quantity", "error");
+        }
+        else{
         values.forEach(function (v, i) {
           let id = Math.floor(1000 + Math.random() * 9000);
           drugsPushed.push("resource:model.Drug#"+id);
@@ -236,7 +296,8 @@ class Prescription extends Component {
               "consumption": {
                 "$class": "model.DrugConsumption",
                 "mealTiming": values[i].meal,
-                "consumptionTiming": values[i].timing
+                "consumptionTiming": values[i].timing,
+                "quantity": values[i].quantity
               }
             })
           }).then(function(response) {
@@ -268,6 +329,9 @@ fetch('http://b0e413f5.ngrok.io/api/model.PractitionerAddPrescription', {
     "practitioner": "resource:model.Practitioner#2222"
   })
 }).then(function(response) {
+  _this.setState({
+    isActive:false
+  });
   swal("Added!", "Prescription added succefully to record", "success");
   console.log (response.text())
 }, function(error) {
@@ -276,11 +340,18 @@ fetch('http://b0e413f5.ngrok.io/api/model.PractitionerAddPrescription', {
  }, 3000);
 
 }
+}
 });
+}
   }
   render() {
     let {drugs} = this.state
     return (
+      <LoadingOverlay
+      active={this.state.isActive}
+      spinner
+      text='Loading...'
+    >
       <div className="animated fadeIn">
         <Row>
           <Col xs="12" md="12">
@@ -295,7 +366,7 @@ fetch('http://b0e413f5.ngrok.io/api/model.PractitionerAddPrescription', {
             <Label>Patient's name</Label>
           </Col>
           <Col xs="12" md="9">
-            <p className="form-control-static">Username</p>
+            <p className="form-control-static">Firas</p>
           </Col>
         </FormGroup>
         <FormGroup row>
@@ -303,7 +374,7 @@ fetch('http://b0e413f5.ngrok.io/api/model.PractitionerAddPrescription', {
             <Label>Practitioner's name</Label>
           </Col>
           <Col xs="12" md="9">
-            <p className="form-control-static">Username</p>
+            <p className="form-control-static">Dr Mohamed Salah</p>
           </Col>
         </FormGroup>
         <FormGroup row>
@@ -327,9 +398,10 @@ fetch('http://b0e413f5.ngrok.io/api/model.PractitionerAddPrescription', {
             let beforeId=`before-${idx}`;
             let afterId=`after-${idx}`;
             let indifferentId=`indifferent-${idx}`;
+            let quantityId=`quantity-${idx}`
             return (
               <FormGroup row key={idx}>
-                <Col md="3">
+                <Col md="1">
                   <Label htmlFor="drugId">{`Drug #${idx + 1}`}</Label>
                 </Col>
                 <Col xs="6" md="3">
@@ -372,6 +444,11 @@ fetch('http://b0e413f5.ngrok.io/api/model.PractitionerAddPrescription', {
                     <Label className="form-check-label" check htmlFor={indifferentId}>Indifferent</Label>
                   </FormGroup>
                 </Col>
+                <Col md="2">
+                <FormGroup check inline>
+                    <Input type="number" name="quantity"  id={quantityId} placeholder="Quantity" onChange={this.quantityChange.bind(this, idx)} />
+                  </FormGroup>
+                </Col>
               </FormGroup>
             )
           })
@@ -386,7 +463,7 @@ fetch('http://b0e413f5.ngrok.io/api/model.PractitionerAddPrescription', {
           </Col>
         </Row>
       </div>
-
+      </LoadingOverlay>
         )
   }
 }

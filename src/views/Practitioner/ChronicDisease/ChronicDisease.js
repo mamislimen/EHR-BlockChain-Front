@@ -171,6 +171,10 @@ class ChronicDisease extends Component {
     })
   }
   submit = (e) => {
+    if(this.state.value==="" || this.state.notes==="" || this.state.date===""){
+      swal("Error!", "Complete the form", "error");
+    }
+    else{
     swal({
       title: "Are you sure you want to add this condition ?",
       icon: "warning",
@@ -210,6 +214,7 @@ class ChronicDisease extends Component {
 })
 }
 });
+    }
   }
 
   render() {
@@ -228,7 +233,7 @@ class ChronicDisease extends Component {
                       <Label>Patient's name</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <p className="form-control-static">Username</p>
+                      <p className="form-control-static">Firas</p>
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -236,7 +241,7 @@ class ChronicDisease extends Component {
                       <Label>Practitioner's name</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <p className="form-control-static">Username</p>
+                      <p className="form-control-static">Dr Mohamed Salah</p>
                     </Col>
                   </FormGroup>
                   <FormGroup row>
