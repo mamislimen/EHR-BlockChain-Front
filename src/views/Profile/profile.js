@@ -146,12 +146,9 @@ testObesite(){
     waiting : !this.state.waiting
   })
 
-  fetch('http://localhost:3005/Patient/obesite/', {
+  fetch('http://pacific-anchorage-81247.herokuapp.com/Patient/obesite/', {
     method: 'POST',
-    headers :{
-      "access-control-allow-origin": "localhost",
-      "access-control-allow-credentials": "false"
-  },
+    
 
  
       body: JSON.stringify({
