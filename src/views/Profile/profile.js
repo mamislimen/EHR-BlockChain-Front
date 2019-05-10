@@ -30,7 +30,7 @@ componentWillMount(){
 
 componentDidMount(){
   this._isMounted = true;
-  fetch('http://b0e413f5.ngrok.io/api/model.Patient/1')
+  fetch('http://b0e413f5.ngrok.io/api/Patient/1')
   .then(res => res.json())
   .then(json => {
     if(json.chronicDiseases != null){
@@ -40,7 +40,7 @@ componentDidMount(){
         const num = nut.split('#');
         //console.log(num[1]);
         if(num[1]!='null'){
-        fetch('http://b0e413f5.ngrok.io/api/model.ChronicDiseases/'+num[1])
+        fetch('http://b0e413f5.ngrok.io/api/ChronicDiseases/'+num[1])
         .then(res2 => res2.json())
         .then(json2 => {
            arr.push(json2)
@@ -75,7 +75,7 @@ toggleEditProfileModal() {
 
 getNutritionDoctors(){
   this._isMounted = true;
-  fetch('http://b0e413f5.ngrok.io/api/model.Practitioner/')
+  fetch('http://b0e413f5.ngrok.io/api/Practitioner/')
   .then(res => res.json())
   .then(json => {
    
@@ -106,7 +106,7 @@ DrugsModel(){
   this.setState({
   DrugsModel : !this.state.DrugsModel});
 
-  fetch('http://b0e413f5.ngrok.io/api/model.Patient/1')
+  fetch('http://b0e413f5.ngrok.io/api/Patient/1')
   .then(res => res.json())
   .then(json => {
     if(json.practitionerDrugs != null){
@@ -116,7 +116,7 @@ DrugsModel(){
         const num = nut.split('#');
         //console.log(num[1]);
         if(num[1]!='null'){
-        fetch('http://b0e413f5.ngrok.io/api/model.Drug/'+num[1])
+        fetch('http://b0e413f5.ngrok.io/api/Drug/'+num[1])
         .then(res2 => res2.json())
         .then(json2 => {
            arr.push(json2)

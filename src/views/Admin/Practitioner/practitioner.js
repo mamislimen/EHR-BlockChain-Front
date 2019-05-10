@@ -72,7 +72,7 @@ getIdCard()
 };
  
   addPractitioner(){
-    fetch('http://b0e413f5.ngrok.io/api/model.Practitioner', {
+    fetch('http://b0e413f5.ngrok.io/api/Practitioner', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
