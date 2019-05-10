@@ -2,11 +2,15 @@
   "name": "@coreui/coreui-free-react-admin-template",
   "version": "2.1.6",
   "description": "CoreUI React Open Source Bootstrap 4 Admin Template",
-  "author": "Łukasz Holeczek",
+  "author": "Angry Nirds",
   "homepage": "https://coreui.io",
-  "copyright": "Copyright 2018 creativeLabs Łukasz Holeczek",
+  "copyright": "Copyright 2019 Angry Nirds Team",
   "license": "MIT",
   "private": true,
+  "engines": {
+    "node": "^8.11.1",
+    "npm": "^6.9.0"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:coreui/coreui-free-react-admin-template.git"
@@ -82,15 +86,13 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "server": "node-env-run server --exec nodemon | pino-colada",
-    "dev": "run-p server start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:cov": "react-scripts test --coverage",
     "test:debug": "react-scripts --inspect-brk test --runInBand",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:4000",
+  "proxy": "https://pacific-anchorage-81247.herokuapp.com",
   "bugs": {
     "url": "https://github.com/coreui/coreui-free-react-admin-template/issues"
   },
