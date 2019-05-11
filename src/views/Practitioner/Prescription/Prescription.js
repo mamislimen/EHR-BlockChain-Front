@@ -90,7 +90,7 @@ class Prescription extends Component {
     let _this = this;
 
     // Url of your website that process the data and returns a
-    let url = `https://www.dawini.tn/patient/findname/medicament?term=${searchText}`;
+    let url = `https://pacific-anchorage-81247.herokuapp.com/drugs/${searchText}`;
 
     // Configure a basic AJAX request to your server side API
     // that returns the data according to the sent text
