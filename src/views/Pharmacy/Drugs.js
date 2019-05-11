@@ -56,7 +56,7 @@ class Drugs extends Component{
     console.log(this.state.patient);
   }
   renderMyData(){
-    fetch('http://33090049.ngrok.io/api/Patient/1')
+    fetch('http://34.247.209.188:3000/api/Patient/1')
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({ patient : responseJson, });
@@ -64,7 +64,7 @@ class Drugs extends Component{
       .catch((error) => {
         console.error("error client");
       });
-    fetch('http://33090049.ngrok.io/api/Prescription')
+    fetch('http://34.247.209.188:3000/api/Prescription')
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({ prescriptions : responseJson, });
@@ -115,7 +115,7 @@ class Drugs extends Component{
   };
 
   findDrugById = (drugId, presId) => {
-    fetch('http://33090049.ngrok.io/api/Drug/'+drugId)
+    fetch('http://34.247.209.188:3000/api/Drug/'+drugId)
       .then((response) => response.json())
       .then((responseJson) => {
         return this.findInteraction(responseJson.name, presId);
@@ -129,7 +129,7 @@ class Drugs extends Component{
     this.setState({isActive: true});
     if(this.state.interaction !== null) {
     }
-    fetch('http://33090049.ngrok.io/api/verifyInteraction', {
+    fetch('http://34.247.209.188:3000/api/verifyInteraction', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -154,7 +154,7 @@ class Drugs extends Component{
             "price": this.state.drugPrice,
             "lotNumber": this.state.drugLot
           });
-          fetch('http://33090049.ngrok.io/api/Patient/1', {
+          fetch('http://34.247.209.188:3000/api/Patient/1', {
             method: 'PUT',
             headers: {
               'Accept': 'application/json',
@@ -207,7 +207,7 @@ class Drugs extends Component{
     this.setState({isActive: true});
     if(this.state.interaction !== null) {
     }
-    fetch('http://33090049.ngrok.io/api/verifyInteraction', {
+    fetch('http://34.247.209.188:3000/api/verifyInteraction', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -223,7 +223,7 @@ class Drugs extends Component{
       .then((responseJson) => {
         this.setState({ interaction : responseJson, });
         if (this.state.interaction.length === 0) {
-          fetch('http://33090049.ngrok.io/api/PharmacyAddDrugFromPrescription', {
+          fetch('http://34.247.209.188:3000/api/PharmacyAddDrugFromPrescription', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',

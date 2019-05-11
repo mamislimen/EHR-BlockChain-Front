@@ -280,7 +280,7 @@ class Prescription extends Component {
           let id = Math.floor(1000 + Math.random() * 9000);
           drugsPushed.push("resource:model.Drug#"+id);
           let transactions = async () => {
-            await fetch('http://33090049.ngrok.io/api/Drug', {
+            await fetch('http://34.247.209.188:3000/api/Drug', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -311,7 +311,7 @@ class Prescription extends Component {
 console.log(drugsPushed);
 setTimeout(function(){
   let idpres = Math.floor(1000 + Math.random() * 9000);
-fetch('http://33090049.ngrok.io/api/PractitionerAddPrescription', {
+fetch('http://34.247.209.188:3000/api/PractitionerAddPrescription', {
   method: 'POST',
   headers: {
     'Accept': 'application/json',

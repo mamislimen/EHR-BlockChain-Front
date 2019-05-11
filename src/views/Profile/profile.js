@@ -30,7 +30,7 @@ componentWillMount(){
 
 componentDidMount(){
   this._isMounted = true;
-  fetch('http://33090049.ngrok.io/api/Patient/1')
+  fetch('http://34.247.209.188:3000/api/Patient/1')
   .then(res => res.json())
   .then(json => {
     if(json.chronicDiseases != null){
@@ -40,7 +40,7 @@ componentDidMount(){
         const num = nut.split('#');
         //console.log(num[1]);
         if(num[1]!='null'){
-        fetch('http://33090049.ngrok.io/api/ChronicDiseases/'+num[1])
+        fetch('http://34.247.209.188:3000/api/ChronicDiseases/'+num[1])
         .then(res2 => res2.json())
         .then(json2 => {
            arr.push(json2)
@@ -75,7 +75,7 @@ toggleEditProfileModal() {
 
 getNutritionDoctors(){
   this._isMounted = true;
-  fetch('http://33090049.ngrok.io/api/Practitioner/')
+  fetch('http://34.247.209.188:3000/api/Practitioner/')
   .then(res => res.json())
   .then(json => {
    
@@ -106,7 +106,7 @@ DrugsModel(){
   this.setState({
   DrugsModel : !this.state.DrugsModel});
 
-  fetch('http://33090049.ngrok.io/api/Patient/1')
+  fetch('http://34.247.209.188:3000/api/Patient/1')
   .then(res => res.json())
   .then(json => {
     if(json.practitionerDrugs != null){
@@ -116,7 +116,7 @@ DrugsModel(){
         const num = nut.split('#');
         //console.log(num[1]);
         if(num[1]!='null'){
-        fetch('http://33090049.ngrok.io/api/Drug/'+num[1])
+        fetch('http://34.247.209.188:3000/api/Drug/'+num[1])
         .then(res2 => res2.json())
         .then(json2 => {
            arr.push(json2)
