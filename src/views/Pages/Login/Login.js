@@ -37,7 +37,7 @@ handleSubmit(e) {
         login: this.state.login,
         password: this.state.password,
     }
-    console.log(user);
+   // console.log(user);
     this.props.loginUser(user);
 }
 

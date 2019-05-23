@@ -22,7 +22,7 @@ export const loginUser = (user) => dispatch => {
                // const token  = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjExMjIiLCJpYXQiOjE1NTc0NzY4MDIsImV4cCI6MTU1NzU2MzIwMn0.WKVouobN_D6KPJOHLBu0UrAOoKbKzE2eypS5OCp8M5w";
                const { token } = res.data; 
                localStorage.setItem('jwtToken', token);
-                localStorage.setItem('user' ,'patient');
+                localStorage.setItem('user' ,res.data.user);
                 setAuthToken(token);
                 const decoded = jwt_decode(token);
                 dispatch(setCurrentUser(decoded));
