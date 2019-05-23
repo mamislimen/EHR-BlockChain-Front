@@ -37,7 +37,9 @@ class Consultation extends Component {
     //this.curr.setDate(this.curr.getDate() + 3);
     this.date = this.curr.toISOString().substr(0,10);
     this.state = {
-      practitionerName:this.decoded.pratitionerId,
+      practitionerName:this.decoded.firstName,
+      practitionerId:this.decoded.pratitionerId,
+      patientId:this.decoded.patientId,
       collapse: true,
       fadeIn: true,
       timeout: 300,
@@ -90,10 +92,10 @@ class Consultation extends Component {
     "reason": this.state.reason,
     "output": this.state.output,
     "notes": this.state.notes,
-    "practitioner": "resource:model.Practitioner#2222"
+    "practitioner": "resource:model.Practitioner#"+this.state.patientId
   },
-  "patient": "resource:model.Patient#1111",
-  "practitioner": "resource:model.Practitioner#2222"
+  "patient": "resource:model.Patient#"+this.state.patientId,
+  "practitioner": "resource:model.Practitioner#"+this.state.practitionerId
   })
 }).then(function(response) {
   if(response.status==200){
