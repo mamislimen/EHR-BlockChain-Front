@@ -25,6 +25,7 @@ import {
   Row,
 } from 'reactstrap';
 import swal from 'sweetalert';
+import jwt_decode from 'jwt-decode';
 
 class Consultation extends Component {
   constructor(props) {
