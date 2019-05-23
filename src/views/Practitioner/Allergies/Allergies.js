@@ -139,7 +139,7 @@ class Allergies extends Component {
                       <Label>Patient's name</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <p className="form-control-static">Firas</p>
+                      <p className="form-control-static">{this.state.patientName}</p>
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -147,7 +147,7 @@ class Allergies extends Component {
                       <Label>Practitioner's name</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <p className="form-control-static">Dr Mohamed Salah</p>
+                      <p className="form-control-static">Dr {this.state.practitionerName}</p>
                     </Col>
                   </FormGroup>
                   <FormGroup row>
