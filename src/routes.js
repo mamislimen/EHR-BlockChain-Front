@@ -16,6 +16,7 @@ const Pharmacy = React.lazy(() => import('./views/Pharmacy/Drugs'));
 const AdminPharmacy = React.lazy(() => import('./views/Admin/Pharmacy/pharmacy'));
 const AdminPatient = React.lazy(() => import('./views/Admin/Patient/patient'));
 const AdminPractioner = React.lazy(() => import('./views/Admin/Practitioner/practitioner'));
+const ProfilePractioner = React.lazy(() => import('./views/Practitioner/profile/profile'));
  
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
@@ -31,6 +32,7 @@ const routes = [
   { path: '/dashboards/practitioner/mri', exact: true, name: 'MRI', component: Mri },
   { path: '/dashboards/practitioner/labresults', exact: true, name: 'Lab Results', component: LabResults },
   { path: '/dashboards/practitioner/chronicdisease', exact: true, name: 'chronic disease', component: ChronicDisease },
+  { path: '/dashboards/practitioner/profile', exact: true, name: 'Profile', component: ProfilePractioner },
   { path: '/dashboards/pharmacy/addDrugs', exact: true, name: 'Pharmacy add Drug', component: Pharmacy },
   { path: '/dashboards/admin/pharmacy', exact: true,  name: 'Nutrition', component: AdminPharmacy },
   { path: '/dashboards/admin/practitioner', exact: true,  name: 'Nutrition', component: AdminPractioner },

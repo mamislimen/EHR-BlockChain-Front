@@ -1,8 +1,8 @@
 export default {
   items: [
     {
-      name: 'Dashboard',
-      url: '/dashboards',
+      name: 'Patient Profile',
+      url: '/dashboards/practitioner/profile',
       icon: 'icon-speedometer',
       // badge: {
       //   variant: 'info',
