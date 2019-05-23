@@ -54,7 +54,6 @@ export default class physicalactivity extends Component {
     this._refreshPhysical();
     
   }
-  componentDidUpdate(){this._refreshPhysical();}
 
   
   

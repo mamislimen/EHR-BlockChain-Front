@@ -38,7 +38,7 @@ class Consultation extends Component {
     //this.curr.setDate(this.curr.getDate() + 3);
     this.date = this.curr.toISOString().substr(0,10);
     this.state = {
-      practitionerName:this.decoded.firstName,
+      practitionerName:decoded.firstName+" "+decoded.lastName,
       practitionerId:this.decoded.pratitionerId,
       patientId:this.decoded.patientId,
       collapse: true,
