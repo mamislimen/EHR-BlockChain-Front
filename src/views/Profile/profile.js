@@ -2,13 +2,18 @@ import React, { Component } from 'react'
 import styles from './profile.css';
 import LoadingScreen from 'react-loading-screen';
 import Moment from 'react-moment';
+import jwt_decode from 'jwt-decode';
 import { Input, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter, Button , Table} from 'reactstrap';
 export default class profile extends Component {
   _isMounted = false;
 constructor(props){
   super(props);
+  const token= localStorage.getItem('jwtToken');
+  const decoded = jwt_decode(token);
+  console.log(decoded);
   this.state = {
     testObesite:false,
+    id:decoded.patientId,
     items: '',
     isLoaded: false,
     sick:'[]',
@@ -30,7 +35,7 @@ componentWillMount(){
 
 componentDidMount(){
   this._isMounted = true;
-  fetch('http://34.247.209.188:3000/api/Patient/1')
+  fetch('http://34.247.209.188:3000/api/Patient/'+this.state.id)
   .then(res => res.json())
   .then(json => {
     if(json.chronicDiseases != null){
@@ -106,7 +111,7 @@ DrugsModel(){
   this.setState({
   DrugsModel : !this.state.DrugsModel});
 
-  fetch('http://34.247.209.188:3000/api/Patient/1')
+  fetch('http://34.247.209.188:3000/api/Patient/'+this.state.id)
   .then(res => res.json())
   .then(json => {
     if(json.practitionerDrugs != null){

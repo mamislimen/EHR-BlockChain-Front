@@ -56,8 +56,9 @@ class DefaultLayout extends Component {
     this.setState({ navData:navigationPharma})
     else  if(usr==='patient')
     this.setState({ navData:navigation})
-    else
+    else if(usr==='admin')
     this.setState({ navData:navigationAdmin})
+  
   }
   render() {
     return (
