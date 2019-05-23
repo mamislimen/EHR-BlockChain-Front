@@ -25,6 +25,7 @@ import {
   Row,
 } from 'reactstrap';
 import swal from 'sweetalert';
+import jwt_decode from 'jwt-decode';
 
 class Allergies extends Component {
   constructor(props) {
@@ -99,11 +100,11 @@ class Allergies extends Component {
     "$class": "model.Allergies",
     "allergyId": id+"",
     "name": this.state.allergy,
-    "practitioner": "resource:model.Practitioner#2222",
+    "practitioner": "resource:model.Practitioner#"+this.state.practitionerId,
     "treatmentBrief": this.state.treatment
   },
-  "patient": "resource:model.Patient#1111",
-  "practitioner": "resource:model.Practitioner#2222"
+  "patient": "resource:model.Patient#"+this.state.patientId,
+  "practitioner": "resource:model.Practitioner#"+this.state.practitionerId
   })
 }).then(function(response) {
   if(response.status==200){

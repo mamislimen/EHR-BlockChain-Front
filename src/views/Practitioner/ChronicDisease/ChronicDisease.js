@@ -27,6 +27,7 @@ import {
 import Autocomplete from 'react-autocomplete';
 import './autocomplete.css';
 import swal from 'sweetalert';
+import jwt_decode from 'jwt-decode';
 
 
 
@@ -213,8 +214,8 @@ class ChronicDisease extends Component {
     "date": this.state.date+"",
     "notes": this.state.notes
   },
-  "patient": "resource:model.Patient#1111",
-  "practitioner": "resource:model.Practitioner#2222"
+  "patient": "resource:model.Patient#"+this.state.patientId,
+  "practitioner": "resource:model.Practitioner#"+this.state.practitionerId
   })
 }).then(function(response) {
   if(response.status==200){

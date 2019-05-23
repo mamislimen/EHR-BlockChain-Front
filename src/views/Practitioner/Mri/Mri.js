@@ -26,6 +26,7 @@ import {
 } from 'reactstrap';
 import FileBase64 from 'react-file-base64';
 import swal from 'sweetalert';
+import jwt_decode from 'jwt-decode';
 
 class Mri extends Component {
   constructor(props) {
@@ -118,8 +119,8 @@ class Mri extends Component {
       "testDate": this.state.date,
       "consultation": "resource:model.Consultation#"+this.state.select
     },
-    "patient": "resource:model.Patient#1111",
-    "practitioner": "resource:model.Practitioner#2222"
+    "patient": "resource:model.Patient#"+this.state.patientId,
+    "practitioner": "resource:model.Practitioner#"+this.state.practitionerId
   })
 }).then(function(response) {
   if(response.status==200){

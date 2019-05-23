@@ -28,6 +28,7 @@ import Autocomplete from 'react-autocomplete';
 import './autocomplete.css';
 import swal from 'sweetalert';
 import LoadingOverlay from 'react-loading-overlay';
+import jwt_decode from 'jwt-decode';
 
 class Prescription extends Component {
   constructor(props) {
@@ -340,8 +341,8 @@ fetch('http://34.247.209.188:3000/api/PractitionerAddPrescription', {
       "prescriptionDate": datepres+"",
       "drugs": drugsPushed
     },
-    "patient": "resource:model.Patient#1111",
-    "practitioner": "resource:model.Practitioner#2222"
+    "patient": "resource:model.Patient#"+this.state.patientId,
+    "practitioner": "resource:model.Practitioner#"+this.state.practitionerId
   })
 }).then(function(response) {
   _this.setState({
