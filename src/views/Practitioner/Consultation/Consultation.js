@@ -29,12 +29,15 @@ import swal from 'sweetalert';
 class Consultation extends Component {
   constructor(props) {
     super(props);
+    const token= localStorage.getItem('jwtToken');
+    const decoded = jwt_decode(token);
     this.toggle = this.toggle.bind(this);
     this.toggleFade = this.toggleFade.bind(this);
     this.curr = new Date();
     //this.curr.setDate(this.curr.getDate() + 3);
     this.date = this.curr.toISOString().substr(0,10);
     this.state = {
+      practitionerName:this.decoded.pratitionerId,
       collapse: true,
       fadeIn: true,
       timeout: 300,
@@ -131,7 +134,7 @@ class Consultation extends Component {
                       <Label>Practitioner's name</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <p className="form-control-static">Dr Mohamed Salah</p>
+                      <p className="form-control-static">{this.state.practitionerName}</p>
                     </Col>
                   </FormGroup>
                   <FormGroup row>
