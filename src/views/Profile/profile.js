@@ -2,16 +2,19 @@ import React, { Component } from 'react'
 import styles from './profile.css';
 import LoadingScreen from 'react-loading-screen';
 import Moment from 'react-moment';
+import { HashRouter, Route, Link } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
-import { Input, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter, Button , Table} from 'reactstrap';
+import classnames from 'classnames';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Modal, ModalHeader, ModalBody, ModalFooter, Button , Table,Row, Col} from 'reactstrap';
 export default class profile extends Component {
   _isMounted = false;
 constructor(props){
   super(props);
   const token= localStorage.getItem('jwtToken');
   const decoded = jwt_decode(token);
-
+  this.toggle = this.toggle.bind(this);
   this.state = {
+    activeTab: '1',
     testObesite:false,
     id:decoded.patientId,
     items: '',
@@ -27,7 +30,7 @@ constructor(props){
     labtest:[],
     prescription:[],
     alergies:[],
-    chronicDiseases:[],
+    chronicD:[],
       DrugsModel:false,
       editProfile: false,
       editProfileData:{
@@ -39,37 +42,23 @@ constructor(props){
 componentWillMount(){
   this._isMounted = false;
 }
-
+toggle(tab) {
+  if (this.state.activeTab !== tab) {
+    this.setState({
+      activeTab: tab
+    });
+  }
+}
 componentDidMount(){
   this._isMounted = true;
   fetch('http://34.247.209.188:3000/api/Patient/'+this.state.id)
   .then(res => res.json())
   .then(json => {
-    if(json.chronicDiseases != null){
-      let arr = [];
-      json.chronicDiseases.forEach(nut => {
-       
-        const num = nut.split('#');
-        //console.log(num[1]);
-        if(num[1]!='null'){
-        fetch('http://34.247.209.188:3000/api/ChronicDiseases/'+num[1])
-        .then(res2 => res2.json())
-        .then(json2 => {
-           arr.push(json2)
-           this.setState({
-            chronicDiseasess:arr,
-            
-          });
-          
-        })
-      }
-        
-      }
-      );}
+  
     this.setState({
       isLoaded: true,
       items:json,
-    });
+    }); });
     fetch('http://34.247.209.188:3000/api/Patient/'+this.state.id)
       .then(response => response.json())
       .then(data => {
@@ -79,10 +68,10 @@ componentDidMount(){
           mri:data.mriResults,
           alergies:data.allergies,
           labtest:data.labTestResults,
-          chronicDiseases:data.chronicDiseases
+          chronicD:data.chronicDiseases
         });
         
-      });
+     
     //console.log(json);
   });
 }
@@ -219,7 +208,8 @@ cancel(){
 
 }
 
-  render() {
+  render() { 
+
     let doctors = this.state.doctors.map((p,index)=>{
       return(
         
@@ -434,31 +424,198 @@ cancel(){
       </div>
     </div>
   </div>
-  <div className="profile-tabs">
-    <ul className="nav nav-tabs nav-tabs-bottom">
-      <li className="nav-item"><a className="nav-link" onClick={this.DrugsModel.bind(this)} data-toggle="tab">Drugs</a></li>
-      <li className="nav-item"><a className="nav-link" onClick={this.toggleEditProfileModal.bind(this)} data-toggle="tab">MRI</a></li>
-      <li className="nav-item"><a className="nav-link" onClick={this.toggleEditProfileModal.bind(this)} data-toggle="tab">Lab Tet</a></li>
-      <li className="nav-item"><a className="nav-link" onClick={this.toggleEditProfileModal.bind(this)} data-toggle="tab">Prescription</a></li>
-      <li className="nav-item"><a className="nav-link" onClick={this.toggleEditProfileModal.bind(this)} data-toggle="tab">Allergies</a></li>
-    </ul>
-   <div>
-     <table>
+   
+        {/* -----new tab -----  */}
+        <div className="profile-tabs">
+        <Nav tabs>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '1' })}
+              onClick={() => { this.toggle('1'); }}
+            >
+              Drugs
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '2' })}
+              onClick={() => { this.toggle('2'); }}
+            >
+              MRI
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '3' })}
+              onClick={() => { this.toggle('3'); }}
+            >
+              Lab Test
+            </NavLink>
+
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '4' })}
+              onClick={() => { this.toggle('4'); }}
+            >
+              Chronic Diseases
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '5' })}
+              onClick={() => { this.toggle('5'); }}
+            >
+              Allergies
+            </NavLink>
+          </NavItem>
+        </Nav>
+        <TabContent activeTab={this.state.activeTab}  className="tab-content" >
+          <TabPane tabId="1">
+            <Row>
+              <Col sm="12">
+              <div className="tab-pane">
+              <table border="2">
+     <thead>
      <tr>
        <td>name</td>
        <td>manufacturer</td>
        <td>price</td>
        <td>lotNumber</td>
        </tr>
-       <tr>
-         <td>{this.state.practitionerDrugs[0].name}</td>
-         <td>{this.state.practitionerDrugs[0].manufacturer}</td>
-         <td>{this.state.practitionerDrugs[0].price}</td>
-         <td>{this.state.practitionerDrugs[0].lotNumber}</td>
+       </thead>
+       <tbody>
+       { this.state.drugspractitioner.map(drug => (
+    <tr>
+        <td>  {drug.name}</td>
+        <td>  {drug.manufacturer}</td>
+        <td>  {drug.price}</td>
+        <td>  {drug.lotNumber}</td>
+    </tr>
+        ))}
+        </tbody>
+     </table></div>
+              </Col>
+            </Row>
+          </TabPane>
+          <TabPane tabId="2">
+            <Row>
+              <Col sm="12">
+          
+        <table border="2">
+     <thead>
+     <tr>
+       <td>establishment</td>
+       <td>reference</td>
+       <td>testDate</td>
+    
        </tr>
+       </thead>
+       <tbody>
+       { this.state.mri.map(m => (
+    <tr>
+        <td>  {m.establishment}</td>
+        <td>  {m.reference}</td>
+        <td>  {m.testDate}</td>
+       
+    </tr>
+        ))}
+        </tbody>
      </table>
-   </div>
-  </div>
+              </Col>
+            </Row>
+          </TabPane>
+
+          <TabPane tabId="3">
+            <Row>
+              <Col sm="12">
+          
+        <table border="2">
+     <thead>
+     <tr>
+       <td>establishment</td>
+       <td>testDate</td>
+       <td>reference</td>
+    
+       </tr>
+       </thead>
+       <tbody>
+       { this.state.labtest.map(m => (
+    <tr>
+        <td>  {m.establishment}</td>
+        <td>  {m.testDate}</td>
+        <td>  {m.reference}</td>
+       
+    </tr>
+        ))}
+        </tbody>
+     </table>
+              </Col>
+            </Row>
+          </TabPane>
+
+          <TabPane tabId="4">
+            <Row>
+              <Col sm="12">
+          
+        <table border="2">
+     <thead>
+     <tr>
+       <td>name</td>
+       <td>date</td>
+       <td>notes</td>
+       
+    
+       </tr>
+       </thead>
+       <tbody>
+       { this.state.chronicD.map(m => (
+    <tr>
+        <td>  {m.name}</td>
+        <td>  {m.date}</td>
+        <td>  {m.notes}</td>
+   
+       
+    </tr>
+        ))}
+        </tbody>
+     </table>
+              </Col>
+            </Row>
+          </TabPane>
+
+
+          <TabPane tabId="5">
+            <Row>
+              <Col sm="12">
+          
+        <table border="2">
+     <thead>
+     <tr>
+       <td>name</td>
+       <td>treatmentBrief</td>
+       </tr>
+       </thead>
+       <tbody>
+       { this.state.alergies.map(m => (
+    <tr>
+        <td>  {m.name}</td>
+        <td>  {m.treatmentBrief}</td>
+   
+       
+    </tr>
+        ))}
+        </tbody>
+     </table>
+              </Col>
+            </Row>
+          </TabPane>
+        </TabContent>
+        </div>
+
+
+
+
 </div>
 
       </div>

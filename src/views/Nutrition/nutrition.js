@@ -3,7 +3,7 @@ import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, Pag
 import styles from './nutrition.css'
 import {NavLink,Link } from "react-router-dom";
 import { Input, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
-
+import jwt_decode from 'jwt-decode';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 export default class nutrition extends Component {
  
@@ -11,7 +11,10 @@ export default class nutrition extends Component {
 
   constructor(props) {
     super(props);
+    const token= localStorage.getItem('jwtToken');
+    const decoded = jwt_decode(token);
     this.state = {
+      id:decoded.patientId,
       nutritions: [],
       patient:[],
       newNutritionModel: false,
@@ -120,7 +123,7 @@ export default class nutrition extends Component {
 deleteNutrition(nutritionId){
  
   
-fetch('http://34.247.209.188:3000/api/Patient/1').then(res=>res.json()).then(json=>{
+fetch('http://34.247.209.188:3000/api/Patient/'+this.state.id).then(res=>res.json()).then(json=>{
   
  json.nutrition.forEach((nut)=> {
  
@@ -134,7 +137,7 @@ fetch('http://34.247.209.188:3000/api/Patient/1').then(res=>res.json()).then(jso
     }
     console.log(json.nutrition)
 
-    fetch('http://34.247.209.188:3000/api/Patient/1', {
+    fetch('http://34.247.209.188:3000/api/Patient/'+this.state.id, {
       method: 'PUT',
        headers: {
          'Accept': 'application/json',
@@ -248,7 +251,7 @@ this.setState({
 
   _refreshNutrition() {
     this._isMounted = true;
-    fetch('http://34.247.209.188:3000/api/Patient/1')
+    fetch('http://34.247.209.188:3000/api/Patient/'+this.state.id)
     .then(res => res.json())
     .then(json => {
       this.setState({

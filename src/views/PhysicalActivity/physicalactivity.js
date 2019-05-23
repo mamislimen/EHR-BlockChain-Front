@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table } from 'reactstrap';
 import styles from './physicalactivity.css'
 import { Input, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
-
+import jwt_decode from 'jwt-decode';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 export default class physicalactivity extends Component {
   
@@ -10,7 +10,10 @@ export default class physicalactivity extends Component {
 
   constructor(props) {
     super(props);
+    const token= localStorage.getItem('jwtToken');
+    const decoded = jwt_decode(token);
     this.state = {
+      id:decoded.patientId,
       physicalActivities: [],
       patient:[],
       newPhysicalModel: false,
@@ -116,7 +119,7 @@ export default class physicalactivity extends Component {
 deletePhysical(physicalId){
  
   
-fetch('http://34.247.209.188:3000/api/Patient/1').then(res=>res.json()).then(json=>{
+fetch('http://34.247.209.188:3000/api/Patient/'+this.state.id).then(res=>res.json()).then(json=>{
   
  json.physicalActivity.forEach((nut)=> {
  
@@ -130,7 +133,7 @@ fetch('http://34.247.209.188:3000/api/Patient/1').then(res=>res.json()).then(jso
     }
     console.log(json.physicalActivity)
 
-    fetch('http://34.247.209.188:3000/api/Patient/1', {
+    fetch('http://34.247.209.188:3000/api/Patient/'+this.state.id, {
       method: 'PUT',
        headers: {
          'Accept': 'application/json',
@@ -240,7 +243,7 @@ this.setState({
 
   _refreshPhysical() {
     this._isMounted = true;
-    fetch('http://34.247.209.188:3000/api/Patient/1')
+    fetch('http://34.247.209.188:3000/api/Patient/'+this.state.id)
     .then(res => res.json())
     .then(json => {
       this.setState({

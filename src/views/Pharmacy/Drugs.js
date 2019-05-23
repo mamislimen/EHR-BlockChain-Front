@@ -5,10 +5,18 @@ import '../Modals/custom-animation.css';
 import {faPlusCircle} from "@fortawesome/free-solid-svg-icons/faPlusCircle";
 import {faMinusCircle} from "@fortawesome/free-solid-svg-icons/faMinusCircle";
 import swal from 'sweetalert';
+import jwt_decode from 'jwt-decode';
 import LoadingOverlay from 'react-loading-overlay';
 class Drugs extends Component{
 
-
+  constructor(props) {
+    super(props);
+    const token= localStorage.getItem('jwtToken');
+    const decoded = jwt_decode(token);
+    this.state = {
+      id:decoded.patientId
+    }
+  }
   state = {
     drugs : [{}],
     medicalRecord: '',
@@ -56,7 +64,7 @@ class Drugs extends Component{
     console.log(this.state.patient);
   }
   renderMyData(){
-    fetch('http://34.247.209.188:3000/api/Patient/1')
+    fetch('http://34.247.209.188:3000/api/Patient/'+this.state.id)
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({ patient : responseJson, });
@@ -154,7 +162,7 @@ class Drugs extends Component{
             "price": this.state.drugPrice,
             "lotNumber": this.state.drugLot
           });
-          fetch('http://34.247.209.188:3000/api/Patient/1', {
+          fetch('http://34.247.209.188:3000/api/Patient/'+this.state.id, {
             method: 'PUT',
             headers: {
               'Accept': 'application/json',
