@@ -10,7 +10,7 @@ constructor(props){
   super(props);
   const token= localStorage.getItem('jwtToken');
   const decoded = jwt_decode(token);
-  console.log(decoded);
+
   this.state = {
     testObesite:false,
     id:decoded.patientId,
@@ -20,7 +20,14 @@ constructor(props){
     chronicDiseasess:[],
     waiting:false,
     doctors:[], 
+    drugspharmacy:[],
+    drugspractitioner:[],
     drugs:[],
+    mri:[],
+    labtest:[],
+    prescription:[],
+    alergies:[],
+    chronicDiseases:[],
       DrugsModel:false,
       editProfile: false,
       editProfileData:{
@@ -63,6 +70,19 @@ componentDidMount(){
       isLoaded: true,
       items:json,
     });
+    fetch('http://34.247.209.188:3000/api/Patient/'+this.state.id)
+      .then(response => response.json())
+      .then(data => {
+        this.setState({
+          drugspharmacy:data.pharmacyDrugs,
+          drugspractitioner:data.practitionerDrugs,
+          mri:data.mriResults,
+          alergies:data.allergies,
+          labtest:data.labTestResults,
+          chronicDiseases:data.chronicDiseases
+        });
+        
+      });
     //console.log(json);
   });
 }
@@ -422,7 +442,22 @@ cancel(){
       <li className="nav-item"><a className="nav-link" onClick={this.toggleEditProfileModal.bind(this)} data-toggle="tab">Prescription</a></li>
       <li className="nav-item"><a className="nav-link" onClick={this.toggleEditProfileModal.bind(this)} data-toggle="tab">Allergies</a></li>
     </ul>
-   
+   <div>
+     <table>
+     <tr>
+       <td>name</td>
+       <td>manufacturer</td>
+       <td>price</td>
+       <td>lotNumber</td>
+       </tr>
+       <tr>
+         <td>{this.state.practitionerDrugs[0].name}</td>
+         <td>{this.state.practitionerDrugs[0].manufacturer}</td>
+         <td>{this.state.practitionerDrugs[0].price}</td>
+         <td>{this.state.practitionerDrugs[0].lotNumber}</td>
+       </tr>
+     </table>
+   </div>
   </div>
 </div>
 
