@@ -39,8 +39,9 @@ class Consultation extends Component {
     this.date = this.curr.toISOString().substr(0,10);
     this.state = {
       practitionerName:decoded.firstName+" "+decoded.lastName,
-      practitionerId:this.decoded.pratitionerId,
-      patientId:this.decoded.patientId,
+      practitionerId:decoded.pratitionerId,
+      patientName:null,
+      patientId:decoded.patientId,
       collapse: true,
       fadeIn: true,
       timeout: 300,
@@ -62,6 +63,15 @@ class Consultation extends Component {
   handleChange(e){
     this.setState({
       [e.target.name]:e.target.value
+    })
+  }
+  componentWillMount() {
+    fetch('http://34.247.209.188:3000/api/Patient/'+this.state.patientId)
+    .then(response => response.json())
+    .then(data => {
+      this.setState({
+        patientName:data.firstName+" "+data.lastName
+      })
     })
   }
   submit = (e) => {
@@ -114,6 +124,9 @@ class Consultation extends Component {
   }
 
   render() {
+    if (this.state.patientName === null) {
+      return("loading");
+    } else {
     return (
       <div className="animated fadeIn">
         <Row>
@@ -185,6 +198,7 @@ class Consultation extends Component {
         </Row>
       </div>
     );
+    }
   }
 }
 

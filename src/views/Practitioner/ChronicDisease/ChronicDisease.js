@@ -33,7 +33,8 @@ import swal from 'sweetalert';
 class ChronicDisease extends Component {
   constructor(props) {
     super(props);
-
+    const token= localStorage.getItem('jwtToken');
+    const decoded = jwt_decode(token);
     this.toggle = this.toggle.bind(this);
     this.toggleFade = this.toggleFade.bind(this);
     this.curr = new Date();
@@ -46,7 +47,11 @@ class ChronicDisease extends Component {
       value: "",
       notes:"",
       date:this.date,
-      autocompleteData: []
+      autocompleteData: [],
+      practitionerName:decoded.firstName+" "+decoded.lastName,
+      practitionerId:decoded.pratitionerId,
+      patientName:null,
+      patientId:decoded.patientId,
     };
     this.onChange = this.onChange.bind(this);
     this.onSelect = this.onSelect.bind(this);
@@ -170,6 +175,15 @@ class ChronicDisease extends Component {
       [e.target.name]:e.target.value
     })
   }
+  componentWillMount() {
+    fetch('http://34.247.209.188:3000/api/Patient/'+this.state.patientId)
+    .then(response => response.json())
+    .then(data => {
+      this.setState({
+        patientName:data.firstName+" "+data.lastName
+      })
+    })
+  }
   submit = (e) => {
     if(this.state.value==="" || this.state.notes==="" || this.state.date===""){
       swal("Error!", "Complete the form", "error");
@@ -218,6 +232,9 @@ class ChronicDisease extends Component {
   }
 
   render() {
+      if (this.state.patientName === null) {
+        return("loading");
+      } else {
     return (
       <div className="animated fadeIn">
         <Row>
@@ -291,6 +308,7 @@ class ChronicDisease extends Component {
         </Row>
       </div>
     );
+      }
   }
 }
 

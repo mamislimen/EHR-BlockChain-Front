@@ -32,6 +32,8 @@ import LoadingOverlay from 'react-loading-overlay';
 class Prescription extends Component {
   constructor(props) {
     super(props);
+    const token= localStorage.getItem('jwtToken');
+    const decoded = jwt_decode(token);
     this.curr = new Date();
     this.date = this.curr.toISOString().substr(0,10);
     this.state={
@@ -44,6 +46,10 @@ class Prescription extends Component {
       errorMeal:false,
       errorQuantity:false,
       isActive:false,
+      practitionerName:decoded.firstName+" "+decoded.lastName,
+      practitionerId:decoded.pratitionerId,
+      patientName:null,
+      patientId:decoded.patientId,
     }
     this.onChange = this.onChange.bind(this);
     this.onSelect = this.onSelect.bind(this);
@@ -215,6 +221,15 @@ class Prescription extends Component {
     this.setState({ values });
     console.log(this.state.values)
   }
+  componentWillMount() {
+    fetch('http://34.247.209.188:3000/api/Patient/'+this.state.patientId)
+    .then(response => response.json())
+    .then(data => {
+      this.setState({
+        patientName:data.firstName+" "+data.lastName
+      })
+    })
+  }
   submit = (e) => {
     let _this=this;
     this.setState({
@@ -345,6 +360,9 @@ fetch('http://34.247.209.188:3000/api/PractitionerAddPrescription', {
 }
   }
   render() {
+    if (this.state.patientName === null) {
+      return("loading");
+    } else {
     let {drugs} = this.state
     return (
       <LoadingOverlay
@@ -464,7 +482,8 @@ fetch('http://34.247.209.188:3000/api/PractitionerAddPrescription', {
         </Row>
       </div>
       </LoadingOverlay>
-        )
+        );
+      }
   }
 }
 export default Prescription

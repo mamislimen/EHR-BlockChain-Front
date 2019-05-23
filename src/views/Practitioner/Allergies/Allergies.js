@@ -29,7 +29,8 @@ import swal from 'sweetalert';
 class Allergies extends Component {
   constructor(props) {
     super(props);
-
+    const token= localStorage.getItem('jwtToken');
+    const decoded = jwt_decode(token);
     this.toggle = this.toggle.bind(this);
     this.toggleFade = this.toggleFade.bind(this);
     this.handleChange=this.handleChange.bind(this);
@@ -42,7 +43,11 @@ class Allergies extends Component {
       timeout: 300,
       allergy:"",
       treatment:"",
-      date:this.date
+      date:this.date,
+      practitionerName:decoded.firstName+" "+decoded.lastName,
+      practitionerId:decoded.pratitionerId,
+      patientName:null,
+      patientId:decoded.patientId,
     };
 
   }
@@ -57,6 +62,15 @@ class Allergies extends Component {
   handleChange(e){
     this.setState({
       [e.target.name]:e.target.value
+    })
+  }
+  componentWillMount() {
+    fetch('http://34.247.209.188:3000/api/Patient/'+this.state.patientId)
+    .then(response => response.json())
+    .then(data => {
+      this.setState({
+        patientName:data.firstName+" "+data.lastName
+      })
     })
   }
   submit = (e) => {
@@ -106,6 +120,9 @@ class Allergies extends Component {
     }
   }
   render() {
+    if (this.state.patientName === null) {
+      return("loading");
+    } else {
     return (
       <div className="animated fadeIn">
         <Row>
@@ -170,6 +187,7 @@ class Allergies extends Component {
         </Row>
       </div>
     );
+    }
   }
 }
 
