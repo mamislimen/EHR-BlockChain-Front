@@ -17,12 +17,14 @@ export const registerUser = (user, history) => dispatch => {
 export const loginUser = (user) => dispatch => {
     axios.post('/api/auth/login', user)
             .then(res => {
-                const token  = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjExMjIiLCJpYXQiOjE1NTc0NzY4MDIsImV4cCI6MTU1NzU2MzIwMn0.WKVouobN_D6KPJOHLBu0UrAOoKbKzE2eypS5OCp8M5w";
-                localStorage.setItem('jwtToken', token);
+               // const token  = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjExMjIiLCJpYXQiOjE1NTc0NzY4MDIsImV4cCI6MTU1NzU2MzIwMn0.WKVouobN_D6KPJOHLBu0UrAOoKbKzE2eypS5OCp8M5w";
+               const { token } = res.data; 
+               localStorage.setItem('jwtToken', token);
                 localStorage.setItem('user' ,'patient');
+                setAuthToken(token);
                 const decoded = jwt_decode(token);
                 dispatch(setCurrentUser(decoded));
-                console.log(res.data);
+                console.log(decoded);
             })
             .catch(err => {
                 dispatch({
