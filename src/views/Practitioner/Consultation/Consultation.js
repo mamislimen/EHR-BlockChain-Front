@@ -38,9 +38,10 @@ class Consultation extends Component {
     //this.curr.setDate(this.curr.getDate() + 3);
     this.date = this.curr.toISOString().substr(0,10);
     this.state = {
-      practitionerName:this.decoded.firstName,
-      practitionerId:this.decoded.pratitionerId,
-      patientId:this.decoded.patientId,
+      practitionerName:decoded.firstName+" "+decoded.lastName,
+      practitionerId:decoded.pratitionerId,
+      patientName:null,
+      patientId:decoded.patientId,
       collapse: true,
       fadeIn: true,
       timeout: 300,
@@ -62,6 +63,15 @@ class Consultation extends Component {
   handleChange(e){
     this.setState({
       [e.target.name]:e.target.value
+    })
+  }
+  componentWillMount() {
+    fetch('http://34.247.209.188:3000/api/Patient/'+this.state.patientId)
+    .then(response => response.json())
+    .then(data => {
+      this.setState({
+        patientName:data.firstName+" "+data.lastName
+      })
     })
   }
   submit = (e) => {
@@ -114,6 +124,9 @@ class Consultation extends Component {
   }
 
   render() {
+    if (this.state.patientName === null) {
+      return("loading");
+    } else {
     return (
       <div className="animated fadeIn">
         <Row>
@@ -129,7 +142,7 @@ class Consultation extends Component {
                       <Label>Patient's name</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <p className="form-control-static">Firas</p>
+                      <p className="form-control-static">{this.state.patientName}</p>
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -137,7 +150,7 @@ class Consultation extends Component {
                       <Label>Practitioner's name</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <p className="form-control-static">{this.state.practitionerName}</p>
+                      <p className="form-control-static">Dr {this.state.practitionerName}</p>
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -185,6 +198,7 @@ class Consultation extends Component {
         </Row>
       </div>
     );
+    }
   }
 }
 

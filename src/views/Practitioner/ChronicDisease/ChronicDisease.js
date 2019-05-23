@@ -27,13 +27,15 @@ import {
 import Autocomplete from 'react-autocomplete';
 import './autocomplete.css';
 import swal from 'sweetalert';
+import jwt_decode from 'jwt-decode';
 
 
 
 class ChronicDisease extends Component {
   constructor(props) {
     super(props);
-
+    const token= localStorage.getItem('jwtToken');
+    const decoded = jwt_decode(token);
     this.toggle = this.toggle.bind(this);
     this.toggleFade = this.toggleFade.bind(this);
     this.curr = new Date();
@@ -46,7 +48,11 @@ class ChronicDisease extends Component {
       value: "",
       notes:"",
       date:this.date,
-      autocompleteData: []
+      autocompleteData: [],
+      practitionerName:decoded.firstName+" "+decoded.lastName,
+      practitionerId:decoded.pratitionerId,
+      patientName:null,
+      patientId:decoded.patientId,
     };
     this.onChange = this.onChange.bind(this);
     this.onSelect = this.onSelect.bind(this);
@@ -170,6 +176,15 @@ class ChronicDisease extends Component {
       [e.target.name]:e.target.value
     })
   }
+  componentWillMount() {
+    fetch('http://34.247.209.188:3000/api/Patient/'+this.state.patientId)
+    .then(response => response.json())
+    .then(data => {
+      this.setState({
+        patientName:data.firstName+" "+data.lastName
+      })
+    })
+  }
   submit = (e) => {
     if(this.state.value==="" || this.state.notes==="" || this.state.date===""){
       swal("Error!", "Complete the form", "error");
@@ -199,8 +214,8 @@ class ChronicDisease extends Component {
     "date": this.state.date+"",
     "notes": this.state.notes
   },
-  "patient": "resource:model.Patient#1111",
-  "practitioner": "resource:model.Practitioner#2222"
+  "patient": "resource:model.Patient#"+this.state.patientId,
+  "practitioner": "resource:model.Practitioner#"+this.state.practitionerId
   })
 }).then(function(response) {
   if(response.status==200){
@@ -218,6 +233,9 @@ class ChronicDisease extends Component {
   }
 
   render() {
+      if (this.state.patientName === null) {
+        return("loading");
+      } else {
     return (
       <div className="animated fadeIn">
         <Row>
@@ -233,7 +251,7 @@ class ChronicDisease extends Component {
                       <Label>Patient's name</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <p className="form-control-static">Firas</p>
+                      <p className="form-control-static">{this.state.patientName}</p>
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -241,7 +259,7 @@ class ChronicDisease extends Component {
                       <Label>Practitioner's name</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <p className="form-control-static">Dr Mohamed Salah</p>
+                      <p className="form-control-static">Dr {this.state.practitionerName}</p>
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -291,6 +309,7 @@ class ChronicDisease extends Component {
         </Row>
       </div>
     );
+      }
   }
 }
 

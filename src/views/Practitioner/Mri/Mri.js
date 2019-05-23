@@ -26,11 +26,13 @@ import {
 } from 'reactstrap';
 import FileBase64 from 'react-file-base64';
 import swal from 'sweetalert';
+import jwt_decode from 'jwt-decode';
 
 class Mri extends Component {
   constructor(props) {
     super(props);
-
+    const token= localStorage.getItem('jwtToken');
+    const decoded = jwt_decode(token);
     this.toggle = this.toggle.bind(this);
     this.toggleFade = this.toggleFade.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -43,7 +45,11 @@ class Mri extends Component {
       mri:"",
       date:this.date,
       data:null,
-      select:""
+      select:"",
+      practitionerName:decoded.firstName+" "+decoded.lastName,
+      practitionerId:decoded.pratitionerId,
+      patientName:null,
+      patientId:decoded.patientId,
     };
 
   }
@@ -58,6 +64,13 @@ class Mri extends Component {
   })
     // Catch any errors we hit and update the app
     .catch(error => console.log(error));
+    fetch('http://34.247.209.188:3000/api/Patient/'+this.state.patientId)
+    .then(response => response.json())
+    .then(data => {
+      this.setState({
+        patientName:data.firstName+" "+data.lastName
+      })
+    })
   }
 
   toggle() {
@@ -106,8 +119,8 @@ class Mri extends Component {
       "testDate": this.state.date,
       "consultation": "resource:model.Consultation#"+this.state.select
     },
-    "patient": "resource:model.Patient#1111",
-    "practitioner": "resource:model.Practitioner#2222"
+    "patient": "resource:model.Patient#"+this.state.patientId,
+    "practitioner": "resource:model.Practitioner#"+this.state.practitionerId
   })
 }).then(function(response) {
   if(response.status==200){
@@ -124,7 +137,7 @@ class Mri extends Component {
     }
   }
   render() {
-    if (this.state.data === null) {
+    if (this.state.data === null || this.state.patientName===null) {
       return("loading");
     } else {
     let{data}=this.state
@@ -144,7 +157,7 @@ class Mri extends Component {
                       <Label>Patient's name</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <p className="form-control-static">Firas</p>
+                      <p className="form-control-static">{this.state.patientName}</p>
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -152,7 +165,7 @@ class Mri extends Component {
                       <Label>Practitioner's name</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <p className="form-control-static">Dr Mohamed Salah</p>
+                      <p className="form-control-static">Dr {this.state.practitionerName}</p>
                     </Col>
                   </FormGroup>
                   <FormGroup row>
