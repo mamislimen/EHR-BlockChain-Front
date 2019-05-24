@@ -49,7 +49,10 @@ componentDidMount() {
 componentWillReceiveProps(nextProps) {
 
   if(nextProps.auth.isAuthenticated) {
-    this.props.history.push('/dashboards')
+   if(localStorage.getItem('user')==='patient')
+    this.props.history.push('/dashboards/profile')
+  else
+    this.props.history.push('/dashboards/admin/patient')
 }
 if(nextProps.errors) {
     this.setState({

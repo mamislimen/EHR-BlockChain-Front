@@ -387,13 +387,13 @@ componentDidMount(){
             <Row>
               <Col sm="12">
               <div className="tab-pane">
-              <table border="2">
+              <Table border="2">
      <thead>
      <tr>
-       <td>name</td>
-       <td>manufacturer</td>
-       <td>price</td>
-       <td>lotNumber</td>
+       <td>Name</td>
+       <td>Manufacturer</td>
+       <td>Price</td>
+       <td>LotNumber</td>
        </tr>
        </thead>
        <tbody>
@@ -406,7 +406,7 @@ componentDidMount(){
     </tr>
         ))}
         </tbody>
-     </table></div>
+     </Table></div>
               </Col>
             </Row>
           </TabPane>
@@ -414,12 +414,12 @@ componentDidMount(){
             <Row>
               <Col sm="12">
           
-        <table border="2">
+        <Table border="2">
      <thead>
      <tr>
-       <td>establishment</td>
-       <td>reference</td>
-       <td>testDate</td>
+       <td>Establishment</td>
+       <td>Image</td>
+       <td>Test Date</td>
     
        </tr>
        </thead>
@@ -433,7 +433,7 @@ componentDidMount(){
     </tr>
         ))}
         </tbody>
-     </table>
+     </Table>
               </Col>
             </Row>
           </TabPane>
@@ -442,12 +442,12 @@ componentDidMount(){
             <Row>
               <Col sm="12">
           
-        <table border="2">
+        <Table border="2">
      <thead>
      <tr>
-       <td>establishment</td>
-       <td>testDate</td>
-       <td>reference</td>
+       <td>Establishment</td>
+       <td>Image</td>
+       <td>Test Date</td>
     
        </tr>
        </thead>
@@ -455,13 +455,13 @@ componentDidMount(){
        { this.state.labtest.map(m => (
     <tr>
         <td>  {m.establishment}</td>
-        <td>  {m.testDate}</td>
         <td>  {m.reference}</td>
+        <td>  {m.testDate}</td>
        
     </tr>
         ))}
         </tbody>
-     </table>
+     </Table>
               </Col>
             </Row>
           </TabPane>
@@ -470,12 +470,12 @@ componentDidMount(){
             <Row>
               <Col sm="12">
           
-        <table border="2">
+        <Table border="2">
      <thead>
      <tr>
-       <td>name</td>
-       <td>date</td>
-       <td>notes</td>
+       <td>Name</td>
+       <td>Date</td>
+       <td>Notes</td>
        
     
        </tr>
@@ -491,7 +491,7 @@ componentDidMount(){
     </tr>
         ))}
         </tbody>
-     </table>
+     </Table>
               </Col>
             </Row>
           </TabPane>
@@ -501,11 +501,11 @@ componentDidMount(){
             <Row>
               <Col sm="12">
           
-        <table border="2">
+        <Table border="2">
      <thead>
      <tr>
-       <td>name</td>
-       <td>treatmentBrief</td>
+       <td>Name</td>
+       <td>Treatment Brief</td>
        </tr>
        </thead>
        <tbody>
@@ -518,14 +518,14 @@ componentDidMount(){
     </tr>
         ))}
         </tbody>
-     </table>
+     </Table>
               </Col>
             </Row>
           </TabPane>
         </TabContent>
         </div>
         ): (
-          <button  onClick={this.requestAccess}>Request Access</button>
+          <Button className="btn btn-default"  onClick={this.requestAccess}>Request Access</Button>
         )}
 
 

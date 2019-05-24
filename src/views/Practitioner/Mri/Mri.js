@@ -136,6 +136,9 @@ class Mri extends Component {
 });
     }
   }
+  formatDate(str){
+return str.substr(0,10);
+  }
   render() {
     if (this.state.data === null || this.state.patientName===null) {
       return("loading");
@@ -195,7 +198,7 @@ class Mri extends Component {
                       {
           data.map((val, idx)=> {
             return (
-                        <option value={val.consultation.consultationId}>{val.consultation.consultionDate} reason : {val.consultation.reason}</option>
+                        <option value={val.consultation.consultationId}>{this.formatDate(val.consultation.consultionDate)} reason : {val.consultation.reason}</option>
             )
                       })
                     }

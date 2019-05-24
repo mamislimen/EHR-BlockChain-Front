@@ -216,7 +216,7 @@ getFiles(files){
                     </Col>
                     <Col xs="12" md="9">
                       <Input type="select" name="gender" id="select" onChange={ this.handleInputChange } value={ this.state.gender }>
-                        <option value="MALE">Please select</option>
+                        <option >Please select</option>
                         <option value="MALE">MALE</option>
                         <option value="FEMALE">FEMALE</option>
                         

@@ -114,7 +114,10 @@ getAutoIdCard(){
     console.log(response);
     localStorage.setItem('jwtToken', response.data.token);
     localStorage.setItem('user', response.data.user);
-      this.props.history.push('/dashboards')
+    if(response.data.user==='practitioner')
+      this.props.history.push('/dashboards/practitioner/profile')
+    else if(response.data.user==='pharmacy')
+      this.props.history.push('/dashboards/pharmacy/addDrugs')
   }
   );
   
