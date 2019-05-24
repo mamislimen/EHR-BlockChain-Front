@@ -3,6 +3,7 @@ import styles from './profile.css';
 import LoadingScreen from 'react-loading-screen';
 import Moment from 'react-moment';
 import jwt_decode from 'jwt-decode';
+import axios from 'axios';
 import classnames from 'classnames';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Modal, ModalHeader, ModalBody, ModalFooter, Button , Table,Row, Col} from 'reactstrap';
 export default class profile extends Component {
@@ -12,11 +13,15 @@ constructor(props){
   const token= localStorage.getItem('jwtToken');
   const decoded = jwt_decode(token);
   this.toggle = this.toggle.bind(this);
+  this.requestAccess = this.requestAccess.bind(this);
+  this.getAutoIdCard = this.getAutoIdCard.bind(this);
   this.state = {
     activeTab: '1',
-    testObesite:false,
+    access:false,
     id:decoded.patientId,
+    idp:decoded.pratitionerId,
     items: '',
+    idc: '',
     isLoaded: false,
     sick:'[]',
     chronicDiseasess:[],
@@ -30,6 +35,8 @@ constructor(props){
     prescription:[],
     alergies:[],
     chronicD:[],
+    fullacess:[],
+    cardpatient:'',
       DrugsModel:false,
       editProfile: false,
       editProfileData:{
@@ -41,6 +48,166 @@ constructor(props){
 componentWillMount(){
   this._isMounted = false;
 }
+
+requestAccess(){
+
+
+  this.getAutoIdCard();
+  this.interval = setInterval(() => {
+    this.getAutoIdCard();
+  }, 500);
+}
+
+getAutoIdCard(){
+
+  console.log("idc"+this.state.idc);
+
+
+ if(this.state.idc ==="" )
+ { 
+ axios.get('https://pacific-anchorage-81247.herokuapp.com/api/auth/card')
+  .then( (response)=> {
+   
+      if(typeof response.data[0] !== "undefined" ){
+        this.setState({ idc: response.data[0]}) ;
+        if (this.state.idc===this.state.cardpatient)
+        {
+          this.setState({ idc: this.state.cardpatient}) ;
+          clearInterval(this.interval);
+        this.setState({ access: true}) ;
+        fetch('http://34.247.209.188:3000/api/Patient/'+this.state.id).then(res=>res.json()).then(json=>{
+        let arr = [];
+          arr=json.fullaccess;
+          arr.push(this.state.idp);
+          fetch('http://34.247.209.188:3000/api/Patient/'+this.state.id, {
+            method: 'PUT',
+             headers: {
+               'Accept': 'application/json',
+             'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                "$class": "model.Patient",
+                
+                "photo": json.photo,
+                "Emprunt":json.Emprunt,
+                "firstName": json.firstName,
+                "lastName": json.lastName,
+                "gender": json.gender,
+                "dateOfBirth": json.dateOfBirth,
+                "cin": json.cin,
+                "address": {
+                  "$class": "model.Address",
+                  "addressLine": json.address.addressLine,
+                  "city": json.address.city,
+                  "state": json.address.state,
+                  "zipCode": json.address.zipCode,
+                  "country": json.address.country
+                },
+                "phone": json.phone,
+                "emergencyPhone": json.emergencyPhone,
+                "email": json.email,
+                "username": json.username,
+                "password": json.password,
+                "occupation": json.occupation,
+                "bloodType": json.bloodType,
+                "height": json.height,
+                "weight":json.weight,
+                "minaccess":json.minaccess,
+                "fullaccess":arr,
+                "pharmacyDrugs": json.pharmacyDrugs,
+                "practitionerDrugs": json.practitionerDrugs,
+                "physicalActivity": json.physicalActivity,
+                "mriResults": json.mriResults,
+                "allergies": json.allergies,
+                "labTestResults": json.labTestResults,
+                "chronicDiseases": json.chronicDiseases,
+                "prescriptions": json.prescriptions,
+                "consultations": json.consultations,
+                "nutrition": json.nutrition
+              })
+           });
+          });
+      }else
+      {
+        console.log('idc != cardp');
+      }
+    
+  
+    }
+
+    
+   })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  });
+ } 
+ else if (this.state.idc===this.state.cardpatient)
+ {
+   this.setState({ idc: this.state.cardpatient}) ;
+   clearInterval(this.interval);
+ this.setState({ access: true}) ;
+ fetch('http://34.247.209.188:3000/api/Patient/'+this.state.id).then(res=>res.json()).then(json=>{
+ let arr = [];
+   arr=json.fullaccess;
+   arr.push(this.state.idp);
+   fetch('http://34.247.209.188:3000/api/Patient/'+this.state.id, {
+     method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+      'Content-Type': 'application/json',
+       },
+       body: JSON.stringify({
+         "$class": "model.Patient",
+         
+         "photo": json.photo,
+         "Emprunt":json.Emprunt,
+         "firstName": json.firstName,
+         "lastName": json.lastName,
+         "gender": json.gender,
+         "dateOfBirth": json.dateOfBirth,
+         "cin": json.cin,
+         "address": {
+           "$class": "model.Address",
+           "addressLine": json.address.addressLine,
+           "city": json.address.city,
+           "state": json.address.state,
+           "zipCode": json.address.zipCode,
+           "country": json.address.country
+         },
+         "phone": json.phone,
+         "emergencyPhone": json.emergencyPhone,
+         "email": json.email,
+         "username": json.username,
+         "password": json.password,
+         "occupation": json.occupation,
+         "bloodType": json.bloodType,
+         "height": json.height,
+         "weight":json.weight,
+         "minaccess":json.minaccess,
+         "fullaccess":arr,
+         "pharmacyDrugs": json.pharmacyDrugs,
+         "practitionerDrugs": json.practitionerDrugs,
+         "physicalActivity": json.physicalActivity,
+         "mriResults": json.mriResults,
+         "allergies": json.allergies,
+         "labTestResults": json.labTestResults,
+         "chronicDiseases": json.chronicDiseases,
+         "prescriptions": json.prescriptions,
+         "consultations": json.consultations,
+         "nutrition": json.nutrition
+       })
+    });
+   });
+}else
+{
+  this.setState({ idc: ''}) ;
+ console.log('idc != cardp');
+}
+}
+
+
+
 toggle(tab) {
   if (this.state.activeTab !== tab) {
     this.setState({
@@ -49,6 +216,8 @@ toggle(tab) {
   }
 }
 componentDidMount(){
+
+
   this._isMounted = true;
   fetch('http://34.247.209.188:3000/api/Patient/'+this.state.id)
   .then(res => res.json())
@@ -67,30 +236,22 @@ componentDidMount(){
           mri:data.mriResults,
           alergies:data.allergies,
           labtest:data.labTestResults,
-          chronicD:data.chronicDiseases
+          chronicD:data.chronicDiseases,
+          fullacess:data.fullaccess,
+          cardpatient:data.Emprunt,
         });
-        
-     
-    //console.log(json);
-  });
-}
-
-
-
-
-toggleEditProfileModal() {
-  this.setState({
-    editProfile: ! this.state.editProfile
+   
   });
 
-  console.log('hello')
+
 }
 
+ 
 
   render() { 
 
  
-
+    const access = this.state.access;
 
     //nsole.log("helloooooo "+this.state.sick.Conseils)
     var {isLoaded , items }= this.state;
@@ -104,7 +265,7 @@ toggleEditProfileModal() {
         <div className="content">
            <div  className="flex">
             <div className="col-sm-2 col-1">
-                <h4 className="page-title">My Profile</h4>
+                <h4 className="page-title">Patient Profile</h4>
            </div>
        
 
@@ -173,8 +334,10 @@ toggleEditProfileModal() {
       </div>
     </div>
   </div>
-   
-        {/* -----new tab -----  */}
+         
+        {access?
+        (
+       
         <div className="profile-tabs">
         <Nav tabs>
           <NavItem>
@@ -361,13 +524,16 @@ toggleEditProfileModal() {
           </TabPane>
         </TabContent>
         </div>
+        ): (
+          <button  onClick={this.requestAccess}>Request Access</button>
+        )}
 
 
 
+
+        </div>
 
 </div>
-
-      </div>
     )
   }}
 }
