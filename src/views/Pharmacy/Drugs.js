@@ -14,11 +14,8 @@ class Drugs extends Component{
     const token= localStorage.getItem('jwtToken');
     const decoded = jwt_decode(token);
     this.state = {
-      id:decoded.patientId
-    }
-  }
-  state = {
-    drugs : [{}],
+      id:decoded.patientId,
+      drugs : [{}],
     medicalRecord: '',
     access: false,
     patient: null,
@@ -29,7 +26,9 @@ class Drugs extends Component{
     drugPrice: 0,
     drugMan: "",
     drugLot: ""
-  };
+    }
+  }
+ 
 
   handlePrice = (price) =>  {
     this.setState({drugPrice : price.target.value});
@@ -172,26 +171,35 @@ class Drugs extends Component{
               "$class": "model.Patient",
               "firstName": this.state.patient.firstName,
               "lastName": this.state.patient.lastName,
-              "photo": "Ad Lorem commodo.",
-              "Emprunt": "Reprehenderit laborum ipsum ut enim.",
-              "gender": "MALE",
-              "dateOfBirth": "2019-04-24T18:30:29.053Z",
-              "cin": "Id cillum commodo commodo exercitation.",
+              "username": this.state.patient.username,
+              "password": this.state.patient.password,
+              "photo":this.state.patient.photo,
+              "Emprunt": this.state.patient.Emprunt,
+              "gender": this.state.patient.gender,
+              "dateOfBirth": this.state.patient.dateOfBirth,
+              "cin": this.state.patient.cin,
               "address": {
                 "$class": "model.Address",
-                "addressLine": "Laboris veniam sit pariatur.",
-                "city": "Commodo sint ut tempor.",
-                "state": "Ad magna pariatur.",
-                "zipCode": "Mollit amet.",
-                "country": "Ex proident elit."
+                "addressLine":this.state.patient.address.addressLine,
+                "city": this.state.patient.city,
+                "state": this.state.patient.state,
+                "zipCode": this.state.patient.zipCode,
+                "country": this.state.patient.country
               },
-              "phone": "Aliqua fugiat irure voluptate consectetur.",
-              "emergencyPhone": "Velit consequat nisi.",
-              "email": "Sit.",
-              "occupation": "Incididunt consectetur.",
-              "bloodType": "Veniam dolor irure cillum.",
-              "height": 90.627,
-              "weight": 244.846,
+              "phone": this.state.patient.phone,
+              "emergencyPhone":this.state.patient.emergencyPhone,
+              "email":this.state.patient.email,
+              "occupation": this.state.patient.occupation,
+              "bloodType": this.state.patient.bloodType,
+              "height": this.state.patient.height,
+              "weight":this.state.patient.weight,
+              "practitionerDrugs":this.state.patient.practitionerDrugs,
+              "mriResults": this.state.patient.mriResults,
+              "allergies":this.state.patient.allergies,
+              "labTestResults":this.state.patient.labTestResults,
+              "chronicDiseases":this.state.patient.chronicDiseases,
+              "prescriptions": this.state.patient.prescriptions,
+              "consultations": this.state.patient.consultations,
               "pharmacyDrugs": drugs
             })
           });

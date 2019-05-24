@@ -397,7 +397,7 @@ componentDidMount(){
        </tr>
        </thead>
        <tbody>
-       { this.state.drugspractitioner.map(drug => (
+       { this.state.drugspharmacy.map(drug => (
     <tr>
         <td>  {drug.name}</td>
         <td>  {drug.manufacturer}</td>
@@ -427,7 +427,7 @@ componentDidMount(){
        { this.state.mri.map(m => (
     <tr>
         <td>  {m.establishment}</td>
-        <td>  {m.reference}</td>
+        <td><img src={m.reference} width="200" height="150" /></td>
         <td>  {m.testDate}</td>
        
     </tr>
@@ -455,7 +455,7 @@ componentDidMount(){
        { this.state.labtest.map(m => (
     <tr>
         <td>  {m.establishment}</td>
-        <td>  {m.reference}</td>
+        <td> <img src={m.reference} width="200" height="150" /></td>
         <td>  {m.testDate}</td>
        
     </tr>

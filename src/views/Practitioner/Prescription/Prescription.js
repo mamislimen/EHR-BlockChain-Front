@@ -341,8 +341,8 @@ fetch('http://34.247.209.188:3000/api/PractitionerAddPrescription', {
       "prescriptionDate": datepres+"",
       "drugs": drugsPushed
     },
-    "patient": "resource:model.Patient#"+this.state.patientId,
-    "practitioner": "resource:model.Practitioner#"+this.state.practitionerId
+    "patient": "resource:model.Patient#"+_this.state.patientId,
+    "practitioner": "resource:model.Practitioner#"+_this.state.practitionerId
   })
 }).then(function(response) {
   _this.setState({

@@ -485,7 +485,7 @@ cancel(){
        </tr>
        </thead>
        <tbody>
-       { this.state.drugspractitioner.map(drug => (
+       { this.state.drugspharmacy.map(drug => (
     <tr>
         <td>  {drug.name}</td>
         <td>  {drug.manufacturer}</td>
@@ -515,7 +515,7 @@ cancel(){
        { this.state.mri.map(m => (
     <tr>
         <td>  {m.establishment}</td>
-        <td>  {m.reference}</td>
+        <td>  <img src={m.reference} width="200" height="150" /></td>
         <td>  {m.testDate}</td>
        
     </tr>
@@ -543,7 +543,7 @@ cancel(){
        { this.state.labtest.map(m => (
     <tr>
         <td>  {m.establishment}</td>
-        <td>  {m.reference}</td>
+        <td>   <img src={m.reference} width="200" height="150" /></td>
         <td>  {m.testDate}</td>
        
     </tr>
