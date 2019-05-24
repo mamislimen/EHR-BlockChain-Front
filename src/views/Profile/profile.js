@@ -475,13 +475,13 @@ cancel(){
             <Row>
               <Col sm="12">
               <div className="tab-pane">
-              <table border="2">
+              <Table border="2">
      <thead>
      <tr>
-       <td>name</td>
-       <td>manufacturer</td>
-       <td>price</td>
-       <td>lotNumber</td>
+       <td>Name</td>
+       <td>Manufacturer</td>
+       <td>Price</td>
+       <td>LotNumber</td>
        </tr>
        </thead>
        <tbody>
@@ -494,7 +494,7 @@ cancel(){
     </tr>
         ))}
         </tbody>
-     </table></div>
+     </Table></div>
               </Col>
             </Row>
           </TabPane>
@@ -502,12 +502,12 @@ cancel(){
             <Row>
               <Col sm="12">
           
-        <table border="2">
+        <Table border="2">
      <thead>
      <tr>
-       <td>establishment</td>
-       <td>reference</td>
-       <td>testDate</td>
+       <td>Establishment</td>
+       <td>Image</td>
+       <td>Test Date</td>
     
        </tr>
        </thead>
@@ -521,7 +521,7 @@ cancel(){
     </tr>
         ))}
         </tbody>
-     </table>
+     </Table>
               </Col>
             </Row>
           </TabPane>
@@ -530,12 +530,12 @@ cancel(){
             <Row>
               <Col sm="12">
           
-        <table border="2">
+        <Table border="2">
      <thead>
      <tr>
-       <td>establishment</td>
-       <td>testDate</td>
-       <td>reference</td>
+       <td>Establishment</td>
+       <td>Image</td>
+       <td>Test Date</td>
     
        </tr>
        </thead>
@@ -543,13 +543,13 @@ cancel(){
        { this.state.labtest.map(m => (
     <tr>
         <td>  {m.establishment}</td>
-        <td>  {m.testDate}</td>
         <td>  {m.reference}</td>
+        <td>  {m.testDate}</td>
        
     </tr>
         ))}
         </tbody>
-     </table>
+     </Table>
               </Col>
             </Row>
           </TabPane>
@@ -558,12 +558,12 @@ cancel(){
             <Row>
               <Col sm="12">
           
-        <table border="2">
+        <Table border="2">
      <thead>
      <tr>
-       <td>name</td>
-       <td>date</td>
-       <td>notes</td>
+       <td>Name</td>
+       <td>Date</td>
+       <td>Notes</td>
        
     
        </tr>
@@ -579,7 +579,7 @@ cancel(){
     </tr>
         ))}
         </tbody>
-     </table>
+     </Table>
               </Col>
             </Row>
           </TabPane>
@@ -589,11 +589,11 @@ cancel(){
             <Row>
               <Col sm="12">
           
-        <table border="2">
+        <Table border="2">
      <thead>
      <tr>
-       <td>name</td>
-       <td>treatmentBrief</td>
+       <td>Name</td>
+       <td>Treatment Brief</td>
        </tr>
        </thead>
        <tbody>
@@ -606,7 +606,7 @@ cancel(){
     </tr>
         ))}
         </tbody>
-     </table>
+     </Table>
               </Col>
             </Row>
           </TabPane>
