@@ -74,7 +74,7 @@
     "sweetalert-react": "^0.4.11",
     "webpack": "4.28.3",
     "webpack-dev-server": "3.1.14",
-    "serve": "^9.4.0",
+    "serve": "^11.3.2",
     "twilio": "^3.30.1"
   },
   "devDependencies": {
